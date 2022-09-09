@@ -59,48 +59,63 @@ justify-center">
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
+import { useStore } from 'vuex'
 export default {
-    setup() {
-        
-    },
+    
     props:{
         todo:{
             type: Object,
             default: () => {}
         }
     },
-    data(){
-        return{
-            title: this.todo.title,
-            isCompleted: this.todo.completed
-        }
-    },
-    methods:{
-        onTitleChange(){
+    setup(props) {
+        const title = ref(props.todo.title)
+        const isCompleted = ref(props.todo.completed)
 
-            if(!this.title){
-                return
-            }
-            this.updateTodo()
-        },
-        updateTodo(){
+        const store = useStore()
+
+
+        // deletar todo
+        const onDelete = () =>{
+            store.dispatch('deleteTodo', props.todo.id)
+        }
+
+        // update todo
+
+        const updateTodo = () =>{
             
             const payload = {
-                id: this.todo.id,
+                id: props.todo.id,
                 data: {
-                    title: this.title,
-                    completed: this.isCompleted
+                    title: title.value,
+                    completed: isCompleted.value
                 }
             }
-            this.$store.dispatch('updateTodo', payload)
-            console.log('mudou para - ', payload.data.title)
-        },
-        onCheckClick(){
-            this.isCompleted = !this.isCompleted
-            this.updateTodo()
-        },
-        onDelete(){
-            this.$store.dispatch('deleteTodo', this.todo.id)
+            store.dispatch('updateTodo', payload)
+        }
+
+        const onTitleChange =() =>{
+
+            if(!title.value){
+                return
+            }
+            updateTodo()
+        }
+
+
+        const onCheckClick =() =>{
+            isCompleted.value = !isCompleted.value
+            updateTodo()
+        }
+
+        return{
+            title,
+            isCompleted,
+            onDelete,
+            onTitleChange,
+            onCheckClick
+
         }
     }
 }

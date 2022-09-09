@@ -32,6 +32,7 @@ segundo -  pegou os arquivos que utilizaria, no caso o spinner.svg e o template 
 terceiro - ele instalou no global do pc um json-serve para simular o consumo de uma pai online
 quarto - criou uma pasta (api) para utilizar um database.json e fazer o consumo dos dados pela api
 
+json-server --watch database.json
 ### AULA 02 (30)
 
 primeiro - quebrar o template html importado para ficar algo mais facil de identificar e manter.
@@ -83,3 +84,9 @@ ele lembra do detalhe de que o state não esta sendo alterado no update
 vamos sincronizar agora, chamando o then depois do ajax
 
 ## Proxima aula será refatorando para composition API
+
+porque trocar e não misturar
+option api = antigas
+composition api = novas 
+
+
